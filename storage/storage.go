@@ -1,9 +1,9 @@
 package storage
 
 import (
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/config"
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/pkg/db"
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/pkg/logger"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/config"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/db"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/logger"
 )
 
 type StorageI interface {

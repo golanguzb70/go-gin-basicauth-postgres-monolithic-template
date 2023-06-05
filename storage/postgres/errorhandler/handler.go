@@ -3,7 +3,7 @@ package errorhandler
 import (
 	"database/sql"
 
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/pkg/logger"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/logger"
 	"github.com/lib/pq"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"

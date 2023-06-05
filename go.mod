@@ -1,4 +1,4 @@
-module github.com/golanguzb70/go-gin-basicauth-monolithic-template
+module github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template
 
 go 1.20
 

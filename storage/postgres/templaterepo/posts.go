@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/models"
-	"github.com/golanguzb70/go-gin-basicauth-monolithic-template/storage/postgres/errorhandler"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/models"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/storage/postgres/errorhandler"
 )
 
 func (r *TemplateRepo) Create(ctx context.Context, req *models.TemplateCreateReq) (*models.TemplateResponse, error) {
