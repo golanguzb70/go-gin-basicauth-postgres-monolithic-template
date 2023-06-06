@@ -1,0 +1,75 @@
+basePath: /v1
+definitions:
+  models.DefaultResponse:
+    properties:
+      error_code:
+        type: integer
+      error_message:
+        type: string
+    type: object
+  models.TemplateApiResponse:
+    properties:
+      body:
+        $ref: '#/definitions/models.TemplateResponse'
+      error_code:
+        type: integer
+      error_message:
+        type: string
+    type: object
+  models.TemplateCreateReq:
+    properties:
+      template_name:
+        type: string
+    type: object
+  models.TemplateResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      template_name:
+        type: string
+      updated_at:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Here QA can test and frontend or mobile developers can get information
+    of API endpoints.
+  title: Template project API Endpoints
+  version: "1.0"
+paths:
+  /template:
+    post:
+      consumes:
+      - application/json
+      description: Here template can be created.
+      parameters:
+      - description: post info
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.TemplateCreateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TemplateApiResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+      security:
+      - BearerAuth: []
+      summary: Create template
+      tags:
+      - Template
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

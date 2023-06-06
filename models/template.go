@@ -33,3 +33,15 @@ type TemplateResponse struct {
 	CreatedAt    string `json:"created_at"`
 	UpdatedAt    string `json:"updated_at"`
 }
+
+type TemplateApiResponse struct {
+	ErrorCode    int    `json:"error_code"`
+	ErrorMessage string `json:"error_message"`
+	Body         *TemplateResponse
+}
+
+type TemplateApiFindResponse struct {
+	ErrorCode    int    `json:"error_code"`
+	ErrorMessage string `json:"error_message"`
+	Body         *TemplateFindResponse
+}
