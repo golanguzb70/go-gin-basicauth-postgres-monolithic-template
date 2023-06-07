@@ -7,6 +7,15 @@ definitions:
       error_message:
         type: string
     type: object
+  models.TemplateApiFindResponse:
+    properties:
+      body:
+        $ref: '#/definitions/models.TemplateFindResponse'
+      error_code:
+        type: integer
+      error_message:
+        type: string
+    type: object
   models.TemplateApiResponse:
     properties:
       body:
@@ -21,6 +30,15 @@ definitions:
       template_name:
         type: string
     type: object
+  models.TemplateFindResponse:
+    properties:
+      count:
+        type: integer
+      templates:
+        items:
+          $ref: '#/definitions/models.TemplateResponse'
+        type: array
+    type: object
   models.TemplateResponse:
     properties:
       created_at:
@@ -30,6 +48,13 @@ definitions:
       template_name:
         type: string
       updated_at:
+        type: string
+    type: object
+  models.TemplateUpdateReq:
+    properties:
+      id:
+        type: integer
+      template_name:
         type: string
     type: object
 info:
@@ -65,6 +90,110 @@ paths:
       security:
       - BearerAuth: []
       summary: Create template
+      tags:
+      - Template
+    put:
+      consumes:
+      - application/json
+      description: Here template can be updated.
+      parameters:
+      - description: post info
+        in: body
+        name: post
+        required: true
+        schema:
+          $ref: '#/definitions/models.TemplateUpdateReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TemplateApiResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+      security:
+      - BearerAuth: []
+      summary: Update template
+      tags:
+      - Template
+  /template/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Here template can be deleted.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+      security:
+      - BearerAuth: []
+      summary: Delete template
+      tags:
+      - Template
+    get:
+      consumes:
+      - application/json
+      description: Here template can be got.
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TemplateApiResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+      summary: Get template by key
+      tags:
+      - Template
+  /template/list:
+    get:
+      consumes:
+      - application/json
+      description: Here all templates can be got.
+      parameters:
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: page
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TemplateApiFindResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.DefaultResponse'
+      summary: Get templates list
       tags:
       - Template
 securityDefinitions:

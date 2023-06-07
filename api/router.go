@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	_ "github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/api/docs" // docs
 	v1 "github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/api/handlers/v1"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/config"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/logger"
@@ -64,10 +65,10 @@ func New(option Option) *gin.Engine {
 
 	template := api.Group("/template")
 	template.POST("", h.Template().Create)
-	// template.GET("/:id", h.Template().Get)
-	// template.GET("/list", h.Template().FindList)
-	// template.PUT("", h.Template().Update)
-	// template.DELETE(":id", h.Template().Delete)
+	template.GET("/:id", h.Template().Get)
+	template.GET("/list", h.Template().Find)
+	template.PUT("", h.Template().Update)
+	template.DELETE(":id", h.Template().Delete)
 
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

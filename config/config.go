@@ -11,6 +11,7 @@ import (
 // Config ...
 type Config struct {
 	Environment               string // develop, staging, production
+	LogLevel                  string // DEBUG, INFO ...
 	HTTPPort                  string
 	PostgresHost              string
 	PostgresPort              string
@@ -35,13 +36,14 @@ func Load() Config {
 	c := Config{}
 
 	c.Environment = cast.ToString(getOrReturnDefault("ENVIRONMENT", "develop"))
+	c.LogLevel = cast.ToString(getOrReturnDefault("LOG_LEVEL", "DEBUG"))
 	c.HTTPPort = cast.ToString(getOrReturnDefault("HTTP_PORT", "8000"))
 	c.BaseUrl = cast.ToString(getOrReturnDefault("BASE_URL", "http://localhost:8000/"))
 
 	// Postgres
 	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
 	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", 5432))
-	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "my_resume"))
+	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "templatedatabase"))
 	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "azizbek"))
 	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "Azizbek"))
 	c.PostgresConnectionTimeOut = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TIMEOUT", 5))
