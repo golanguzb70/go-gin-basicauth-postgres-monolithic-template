@@ -64,11 +64,11 @@ func New(option Option) *gin.Engine {
 	api := router.Group("/v1")
 
 	template := api.Group("/template")
-	template.POST("", h.Template().Create)
-	template.GET("/:id", h.Template().Get)
-	template.GET("/list", h.Template().Find)
-	template.PUT("", h.Template().Update)
-	template.DELETE(":id", h.Template().Delete)
+	template.POST("", h.TemplateCreate)
+	template.GET("/:id", h.TemplateGet)
+	template.GET("/list", h.TemplateFind)
+	template.PUT("", h.TemplateUpdate)
+	template.DELETE(":id", h.TemplateDelete)
 
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))

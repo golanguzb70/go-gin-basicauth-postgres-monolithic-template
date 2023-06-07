@@ -6,33 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
-	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/config"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/models"
-	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/logger"
-	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/storage"
 )
-
-type TemplateI interface {
-	Create(c *gin.Context)
-	Get(c *gin.Context)
-	Find(c *gin.Context)
-	Update(c *gin.Context)
-	Delete(c *gin.Context)
-}
-
-type TemplateHandler struct {
-	log      *logger.Logger
-	cfg      config.Config
-	postgres storage.StorageI
-}
-
-func NewTemplateHandler(c *HandlerV1Config) TemplateI {
-	return &TemplateHandler{
-		log:      c.Logger,
-		cfg:      c.Cfg,
-		postgres: c.Postgres,
-	}
-}
 
 // @Router		/template [POST]
 // @Summary		Create template
@@ -44,15 +19,15 @@ func NewTemplateHandler(c *HandlerV1Config) TemplateI {
 // @Param       post   body       models.TemplateCreateReq true "post info"
 // @Success		200 	{object}  models.TemplateApiResponse
 // @Failure     default {object}  models.DefaultResponse
-func (h *TemplateHandler) Create(c *gin.Context) {
+func (h *handlerV1) TemplateCreate(c *gin.Context) {
 	body := &models.TemplateCreateReq{}
 	err := c.ShouldBindJSON(&body)
 	if HandleBadRequestErrWithMessage(c, h.log, err, "c.ShouldBindJSON(&body)") {
 		return
 	}
 
-	res, err := h.postgres.Template().Create(context.Background(), body)
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.postgres.Template().Create()") {
+	res, err := h.storage.Template().Create(context.Background(), body)
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Create()") {
 		return
 	}
 
@@ -72,16 +47,16 @@ func (h *TemplateHandler) Create(c *gin.Context) {
 // @Param       id       path     int true "id"
 // @Success		200 	{object}  models.TemplateApiResponse
 // @Failure     default {object}  models.DefaultResponse
-func (h *TemplateHandler) Get(c *gin.Context) {
+func (h *handlerV1) TemplateGet(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if HandleBadRequestErrWithMessage(c, h.log, err, "strconv.Atoi()") {
 		return
 	}
 
-	res, err := h.postgres.Template().Get(context.Background(), &models.TemplateGetReq{
+	res, err := h.storage.Template().Get(context.Background(), &models.TemplateGetReq{
 		Id: id,
 	})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.postgres.Template().Get()") {
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Get()") {
 		return
 	}
 
@@ -101,7 +76,7 @@ func (h *TemplateHandler) Get(c *gin.Context) {
 // @Param       filters query models.TemplateFindReq true "filters"
 // @Success		200 	{object}  models.TemplateApiFindResponse
 // @Failure     default {object}  models.DefaultResponse
-func (h *TemplateHandler) Find(c *gin.Context) {
+func (h *handlerV1) TemplateFind(c *gin.Context) {
 	page, err := ParsePageQueryParam(c)
 	if HandleBadRequestErrWithMessage(c, h.log, err, "helper.ParsePageQueryParam(c)") {
 		return
@@ -111,11 +86,11 @@ func (h *TemplateHandler) Find(c *gin.Context) {
 		return
 	}
 
-	res, err := h.postgres.Template().Find(context.Background(), &models.TemplateFindReq{
+	res, err := h.storage.Template().Find(context.Background(), &models.TemplateFindReq{
 		Page:  page,
 		Limit: limit,
 	})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.postgres.Template().Find()") {
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Find()") {
 		return
 	}
 
@@ -136,15 +111,15 @@ func (h *TemplateHandler) Find(c *gin.Context) {
 // @Success		200 	{object}  models.TemplateApiResponse
 // @Failure     default {object}  models.DefaultResponse
 // @Router		/template [PUT]
-func (h *TemplateHandler) Update(c *gin.Context) {
+func (h *handlerV1) TemplateUpdate(c *gin.Context) {
 	body := &models.TemplateUpdateReq{}
 	err := c.ShouldBindJSON(&body)
 	if HandleBadRequestErrWithMessage(c, h.log, err, "c.ShouldBindJSON(&body)") {
 		return
 	}
 
-	res, err := h.postgres.Template().Update(context.Background(), body)
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.postgres.Template().Update()") {
+	res, err := h.storage.Template().Update(context.Background(), body)
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Update()") {
 		return
 	}
 
@@ -165,14 +140,14 @@ func (h *TemplateHandler) Update(c *gin.Context) {
 // @Param       id       path     int true "id"
 // @Success		200 	{object}  models.DefaultResponse
 // @Failure     default {object}  models.DefaultResponse
-func (h *TemplateHandler) Delete(c *gin.Context) {
+func (h *handlerV1) TemplateDelete(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if HandleBadRequestErrWithMessage(c, h.log, err, "strconv.Atoi()") {
 		return
 	}
 
-	err = h.postgres.Template().Delete(context.Background(), &models.TemplateDeleteReq{Id: id})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.postgres.Template().Delete()") {
+	err = h.storage.Template().Delete(context.Background(), &models.TemplateDeleteReq{Id: id})
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Delete()") {
 		return
 	}
 
