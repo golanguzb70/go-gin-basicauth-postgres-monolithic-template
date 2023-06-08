@@ -19,3 +19,9 @@ create_migrate:
 	
 crud:
 	/home/azizbek/golang-templates/template-manager/monolithic/crud.sh
+
+compose_up: 
+	docker compose up -d --build
+
+compose_down: 
+	docker compose down
