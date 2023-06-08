@@ -44,13 +44,13 @@ func Load() Config {
 	c.PostgresHost = cast.ToString(getOrReturnDefault("POSTGRES_HOST", "localhost"))
 	c.PostgresPort = cast.ToString(getOrReturnDefault("POSTGRES_PORT", 5432))
 	c.PostgresDatabase = cast.ToString(getOrReturnDefault("POSTGRES_DATABASE", "templatedatabase"))
-	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "azizbek"))
-	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "Azizbek"))
+	c.PostgresUser = cast.ToString(getOrReturnDefault("POSTGRES_USER", "templateuser"))
+	c.PostgresPassword = cast.ToString(getOrReturnDefault("POSTGRES_PASSWORD", "templatesecret"))
 	c.PostgresConnectionTimeOut = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TIMEOUT", 5))
 	c.PostgresConnectionTry = cast.ToInt(getOrReturnDefault("POSTGRES_CONNECTION_TRY", 10))
 
-	c.AdminUsername = cast.ToString(getOrReturnDefault("ADMIN_USERNAME", "azizbek"))
-	c.AdminPassword = cast.ToString(getOrReturnDefault("ADMIN_PASSWORD", "Azizbek"))
+	c.AdminUsername = cast.ToString(getOrReturnDefault("ADMIN_USERNAME", "templatename"))
+	c.AdminPassword = cast.ToString(getOrReturnDefault("ADMIN_PASSWORD", "templatepass"))
 	return c
 }
 
