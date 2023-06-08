@@ -20,7 +20,7 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be updated.",
@@ -63,7 +63,7 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be created.",
@@ -185,7 +185,7 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be deleted.",
@@ -317,10 +317,8 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "BearerAuth": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
+        "BasicAuth": {
+            "type": "basic"
         }
     }
 }`

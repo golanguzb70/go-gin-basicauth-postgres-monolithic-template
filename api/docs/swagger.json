@@ -12,7 +12,7 @@
             "put": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be updated.",
@@ -55,7 +55,7 @@
             "post": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be created.",
@@ -177,7 +177,7 @@
             "delete": {
                 "security": [
                     {
-                        "BearerAuth": []
+                        "BasicAuth": []
                     }
                 ],
                 "description": "Here template can be deleted.",
@@ -309,10 +309,8 @@
         }
     },
     "securityDefinitions": {
-        "BearerAuth": {
-            "type": "apiKey",
-            "name": "Authorization",
-            "in": "header"
+        "BasicAuth": {
+            "type": "basic"
         }
     }
 }

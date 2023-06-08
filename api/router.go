@@ -27,7 +27,7 @@ type Option struct {
 
 // @BasePath  /v1
 
-// @securityDefinitions.apikey BearerAuth
+// @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
 func New(option Option) *gin.Engine {

@@ -13,7 +13,7 @@ import (
 // @Summary		Create template
 // @Tags        Template
 // @Description	Here template can be created.
-// @Security    BearerAuth
+// @Security    BasicAuth
 // @Accept      json
 // @Produce		json
 // @Param       post   body       models.TemplateCreateReq true "post info"
@@ -104,7 +104,7 @@ func (h *handlerV1) TemplateFind(c *gin.Context) {
 // @Summary		Update template
 // @Tags        Template
 // @Description	Here template can be updated.
-// @Security    BearerAuth
+// @Security    BasicAuth
 // @Accept      json
 // @Produce		json
 // @Param       post   body       models.TemplateUpdateReq true "post info"
@@ -134,7 +134,7 @@ func (h *handlerV1) TemplateUpdate(c *gin.Context) {
 // @Summary		Delete template
 // @Tags        Template
 // @Description	Here template can be deleted.
-// @Security    BearerAuth
+// @Security    BasicAuth
 // @Accept      json
 // @Produce		json
 // @Param       id       path     int true "id"

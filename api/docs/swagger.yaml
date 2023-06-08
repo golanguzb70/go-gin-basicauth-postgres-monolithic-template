@@ -88,7 +88,7 @@ paths:
           schema:
             $ref: '#/definitions/models.DefaultResponse'
       security:
-      - BearerAuth: []
+      - BasicAuth: []
       summary: Create template
       tags:
       - Template
@@ -115,7 +115,7 @@ paths:
           schema:
             $ref: '#/definitions/models.DefaultResponse'
       security:
-      - BearerAuth: []
+      - BasicAuth: []
       summary: Update template
       tags:
       - Template
@@ -142,7 +142,7 @@ paths:
           schema:
             $ref: '#/definitions/models.DefaultResponse'
       security:
-      - BearerAuth: []
+      - BasicAuth: []
       summary: Delete template
       tags:
       - Template
@@ -197,8 +197,6 @@ paths:
       tags:
       - Template
 securityDefinitions:
-  BearerAuth:
-    in: header
-    name: Authorization
-    type: apiKey
+  BasicAuth:
+    type: basic
 swagger: "2.0"
