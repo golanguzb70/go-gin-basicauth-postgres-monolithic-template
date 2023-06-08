@@ -14,7 +14,7 @@ func main() {
 	cfg := config.Load()
 	log := logger.New(cfg.LogLevel)
 
-	pgxUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s",
+	pgxUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
 		cfg.PostgresUser,
 		cfg.PostgresPassword,
 		cfg.PostgresHost,
