@@ -21,4 +21,4 @@
 go.work
 
 # All .env files are ignored
-*.env
+config/.env
