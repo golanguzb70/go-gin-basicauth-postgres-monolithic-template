@@ -14,3 +14,8 @@ To stop the program
 ```
 make compose_down
 ```
+
+After program is started successfully, you can check if it is running using this address.
+```
+http://localhost:8000/v1/swagger/index.html
+```
