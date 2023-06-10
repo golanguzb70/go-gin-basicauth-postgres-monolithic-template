@@ -1,4 +1,4 @@
-package errorhandler
+package postgres
 
 import (
 	"database/sql"

@@ -6,7 +6,6 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/models"
-	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/storage/postgres/errorhandler"
 )
 
 func (r *postgresRepo) TemplateCreate(ctx context.Context, req *models.TemplateCreateReq) (*models.TemplateResponse, error) {
@@ -21,7 +20,7 @@ func (r *postgresRepo) TemplateCreate(ctx context.Context, req *models.TemplateC
 		&CreatedAt, &UpdatedAt,
 	)
 	if err != nil {
-		return res, errorhandler.HandleDatabaseError(err, r.Log, "(r *TemplateRepo) Create()")
+		return res, HandleDatabaseError(err, r.Log, "(r *TemplateRepo) Create()")
 	}
 	res.CreatedAt = CreatedAt.Format(time.RFC1123)
 	res.UpdatedAt = UpdatedAt.Format(time.RFC1123)
@@ -40,7 +39,7 @@ func (r *postgresRepo) TemplateGet(ctx context.Context, req *models.TemplateGetR
 		&CreatedAt, &UpdatedAt,
 	)
 	if err != nil {
-		return res, errorhandler.HandleDatabaseError(err, r.Log, "(r *TemplateRepo) Get()")
+		return res, HandleDatabaseError(err, r.Log, "(r *TemplateRepo) Get()")
 	}
 
 	res.CreatedAt = CreatedAt.Format(time.RFC1123)
@@ -56,7 +55,7 @@ func (r *postgresRepo) TemplateFind(ctx context.Context, req *models.TemplateFin
 	res := &models.TemplateFindResponse{}
 	rows, err := query.RunWith(r.Db.Db).Query()
 	if err != nil {
-		return res, errorhandler.HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) FindList()")
+		return res, HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) FindList()")
 	}
 	defer rows.Close()
 
@@ -67,7 +66,7 @@ func (r *postgresRepo) TemplateFind(ctx context.Context, req *models.TemplateFin
 			&CreatedAt, &UpdatedAt,
 		)
 		if err != nil {
-			return res, errorhandler.HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) FindList()")
+			return res, HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) FindList()")
 		}
 
 		temp.CreatedAt = CreatedAt.Format(time.RFC1123)
@@ -92,7 +91,7 @@ func (r *postgresRepo) TemplateUpdate(ctx context.Context, req *models.TemplateU
 		&CreatedAt, &UpdatedAt,
 	)
 	if err != nil {
-		return res, errorhandler.HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) Update()")
+		return res, HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) Update()")
 	}
 	res.CreatedAt = CreatedAt.Format(time.RFC1123)
 	res.UpdatedAt = UpdatedAt.Format(time.RFC1123)
@@ -104,5 +103,5 @@ func (r *postgresRepo) TemplateDelete(ctx context.Context, req *models.TemplateD
 	query := r.Db.Builder.Delete("templates").Where(squirrel.Eq{"id": req.Id})
 
 	_, err := query.RunWith(r.Db.Db).Exec()
-	return errorhandler.HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) Delete()")
+	return HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) Delete()")
 }
