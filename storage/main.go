@@ -4,24 +4,24 @@ import (
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/config"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/db"
 	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/pkg/logger"
-	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/storage/postgres/templaterepo"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/storage/postgres"
 )
 
 type StorageI interface {
-	Template() templaterepo.TemplateI
+	Postgres() postgres.PostgresI
 }
 
 type StoragePg struct {
-	template templaterepo.TemplateI
+	postgres postgres.PostgresI
 }
 
 // NewStoragePg
 func New(db *db.Postgres, log *logger.Logger, cfg *config.Config) StorageI {
 	return &StoragePg{
-		template: templaterepo.New(db, log, cfg),
+		postgres: postgres.New(db, log, cfg),
 	}
 }
 
-func (s *StoragePg) Template() templaterepo.TemplateI {
-	return s.template
+func (s *StoragePg) Postgres() postgres.PostgresI {
+	return s.postgres
 }

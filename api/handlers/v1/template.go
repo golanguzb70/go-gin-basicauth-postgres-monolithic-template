@@ -26,8 +26,8 @@ func (h *handlerV1) TemplateCreate(c *gin.Context) {
 		return
 	}
 
-	res, err := h.storage.Template().Create(context.Background(), body)
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Create()") {
+	res, err := h.storage.Postgres().TemplateCreate(context.Background(), body)
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Postgres().TemplateCreate()") {
 		return
 	}
 
@@ -53,10 +53,10 @@ func (h *handlerV1) TemplateGet(c *gin.Context) {
 		return
 	}
 
-	res, err := h.storage.Template().Get(context.Background(), &models.TemplateGetReq{
+	res, err := h.storage.Postgres().TemplateGet(context.Background(), &models.TemplateGetReq{
 		Id: id,
 	})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Get()") {
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Postgres().TemplateGet()") {
 		return
 	}
 
@@ -86,11 +86,11 @@ func (h *handlerV1) TemplateFind(c *gin.Context) {
 		return
 	}
 
-	res, err := h.storage.Template().Find(context.Background(), &models.TemplateFindReq{
+	res, err := h.storage.Postgres().TemplateFind(context.Background(), &models.TemplateFindReq{
 		Page:  page,
 		Limit: limit,
 	})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Find()") {
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Postgres().TemplateFind()") {
 		return
 	}
 
@@ -118,8 +118,8 @@ func (h *handlerV1) TemplateUpdate(c *gin.Context) {
 		return
 	}
 
-	res, err := h.storage.Template().Update(context.Background(), body)
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Update()") {
+	res, err := h.storage.Postgres().TemplateUpdate(context.Background(), body)
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Postgres().TemplateUpdate()") {
 		return
 	}
 
@@ -146,8 +146,8 @@ func (h *handlerV1) TemplateDelete(c *gin.Context) {
 		return
 	}
 
-	err = h.storage.Template().Delete(context.Background(), &models.TemplateDeleteReq{Id: id})
-	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Template().Delete()") {
+	err = h.storage.Postgres().TemplateDelete(context.Background(), &models.TemplateDeleteReq{Id: id})
+	if HandleDatabaseLevelWithMessage(c, h.log, err, "h.storage.Postgres().TemplateDelete()") {
 		return
 	}
 
