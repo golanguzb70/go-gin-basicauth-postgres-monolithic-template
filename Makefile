@@ -16,9 +16,9 @@ migrate_force:
 
 create_migrate:
 	./scripts/create_migration.sh
-	
-compose_up: 
-	docker compose up -d --build
 
-compose_down: 
+compose_down:  
 	docker compose down
+
+compose_up: compose_down
+	docker compose down & docker compose up -d --build
