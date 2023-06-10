@@ -17,9 +17,6 @@ migrate_force:
 create_migrate:
 	./scripts/create_migration.sh
 	
-crud:
-	/home/azizbek/golang-templates/template-manager/monolithic/crud.sh
-
 compose_up: 
 	docker compose up -d --build
 

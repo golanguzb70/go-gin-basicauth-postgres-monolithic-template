@@ -50,10 +50,10 @@ func (r *postgresRepo) TemplateGet(ctx context.Context, req *models.TemplateGetR
 
 func (r *postgresRepo) TemplateFind(ctx context.Context, req *models.TemplateFindReq) (*models.TemplateFindResponse, error) {
 	var (
-		res *models.TemplateFindResponse
+		res = &models.TemplateFindResponse{}
 	)
 
-	countQuery := r.Db.Builder.Select("count(1) as count").From("templates").Where("deleted at is null")
+	countQuery := r.Db.Builder.Select("count(1) as count").From("templates").Where("deleted_at is null")
 	err := countQuery.RunWith(r.Db.Db).QueryRow().Scan(&res.Count)
 	if err != nil {
 		return res, HandleDatabaseError(err, r.Log, "(r *models.TemplateTemplateRepo) FindList()")
@@ -61,7 +61,7 @@ func (r *postgresRepo) TemplateFind(ctx context.Context, req *models.TemplateFin
 	}
 
 	query := r.Db.Builder.Select("id, template_name, created_at, updated_at").
-		From("templates").Where("deleted  at is null").OrderBy("id").Limit(uint64(req.Limit)).Offset(uint64((req.Page - 1) * req.Limit))
+		From("templates").Where("deleted_at is null").OrderBy("id").Limit(uint64(req.Limit)).Offset(uint64((req.Page - 1) * req.Limit))
 
 	rows, err := query.RunWith(r.Db.Db).Query()
 	if err != nil {
