@@ -20,7 +20,7 @@ compose_down:
 	docker compose down
 
 compose_up: compose_down
-	docker compose down & docker compose up -d --build
+	docker compose up -d --build
 
 crud:
 	./scripts/crud.sh
