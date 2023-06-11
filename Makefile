@@ -1,4 +1,3 @@
-
 run:
 	go run cmd/main.go
 	
@@ -22,3 +21,6 @@ compose_down:
 
 compose_up: compose_down
 	docker compose down & docker compose up -d --build
+
+crud:
+	./scripts/crud.sh
