@@ -12,4 +12,5 @@ type PostgresI interface {
 	TemplateFind(ctx context.Context, req *models.TemplateFindReq) (*models.TemplateFindResponse, error)
 	TemplateUpdate(ctx context.Context, req *models.TemplateUpdateReq) (*models.TemplateResponse, error)
 	TemplateDelete(ctx context.Context, req *models.TemplateDeleteReq) error
+	// Don't delete this line, it is used to modify the file automatically
 }

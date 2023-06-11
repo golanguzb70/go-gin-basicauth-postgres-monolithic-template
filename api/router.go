@@ -70,6 +70,8 @@ func New(option Option) *gin.Engine {
 	template.PUT("", h.TemplateUpdate)
 	template.DELETE(":id", h.TemplateDelete)
 
+	// Don't delete this line, it is used to modify the file automatically
+
 	url := ginSwagger.URL("swagger/doc.json")
 	api.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler, url))
 	return router

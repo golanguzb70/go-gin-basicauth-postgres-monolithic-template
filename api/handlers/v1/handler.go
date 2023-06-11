@@ -13,6 +13,7 @@ type HandlerV1I interface {
 	TemplateFind(c *gin.Context)
 	TemplateUpdate(c *gin.Context)
 	TemplateDelete(c *gin.Context)
+	// Don't delete this line, it is used to modify the file automatically
 }
 
 type handlerV1 struct {
