@@ -1,5 +1,5 @@
 # go-gin-basicauth-monolithic-template
-Monolithic server side Golang template with gin web framework, postgres and basic authorzation middleware.
+Monolithic server side Golang template with gin web framework, postgres and basic authorization middleware.
 
 
 # Instructions to run the source code
