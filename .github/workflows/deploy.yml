@@ -51,7 +51,7 @@ jobs:
       - name: SSH into the server
         uses: webfactory/ssh-agent@v0.5.0
         with:
-          ssh-private-key: ${{ secrets.SERVER_PRIVATE_KEY }}
+          ssh-private-key: ${{ env.SERVER_PRIVATE_KEY }}
 
       - name: Run database migration
         run: |
