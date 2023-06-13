@@ -16,7 +16,7 @@ type StoragePg struct {
 }
 
 // NewStoragePg
-func New(db *db.Postgres, log *logger.Logger, cfg *config.Config) StorageI {
+func New(db *db.Postgres, log *logger.Logger, cfg config.Config) StorageI {
 	return &StoragePg{
 		postgres: postgres.New(db, log, cfg),
 	}
