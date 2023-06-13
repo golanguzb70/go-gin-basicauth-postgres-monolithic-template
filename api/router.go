@@ -30,16 +30,16 @@ type Option struct {
 // @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
-func New(option Option) *gin.Engine {
+func New(log *logger.Logger, cfg config.Config, strg storage.StorageI) *gin.Engine {
 	router := gin.New()
 
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 
 	h := v1.New(&v1.HandlerV1Config{
-		Logger:   option.Logger,
-		Cfg:      option.Conf,
-		Postgres: option.Postgres,
+		Logger:   log,
+		Cfg:      cfg,
+		Postgres: strg,
 	})
 
 	corConfig := cors.DefaultConfig()
@@ -53,8 +53,8 @@ func New(option Option) *gin.Engine {
 	authConf := basicauth.Config{
 		Users: []basicauth.User{
 			{
-				UserName: option.Conf.AdminUsername,
-				Password: option.Conf.AdminPassword,
+				UserName: cfg.AdminUsername,
+				Password: cfg.AdminPassword,
 			},
 		},
 		RequireAuthForAll: true,

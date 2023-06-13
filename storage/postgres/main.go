@@ -16,10 +16,10 @@ var (
 type postgresRepo struct {
 	Db  *db.Postgres
 	Log *logger.Logger
-	Cfg *config.Config
+	Cfg config.Config
 }
 
-func New(db *db.Postgres, log *logger.Logger, cfg *config.Config) PostgresI {
+func New(db *db.Postgres, log *logger.Logger, cfg config.Config) PostgresI {
 	return &postgresRepo{
 		Db:  db,
 		Log: log,

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/squirrel"
+	"github.com/golanguzb70/go-gin-basicauth-postgres-monolithic-template/config"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
@@ -26,7 +27,7 @@ type Postgres struct {
 }
 
 // New -.
-func New(url string, opts ...Option) (*Postgres, error) {
+func New(cfg config.Config, opts ...Option) (*Postgres, error) {
 	pg := &Postgres{
 		connAttempts: _defaultConnAttempts,
 		connTimeout:  _defaultConnTimeout,
@@ -37,10 +38,18 @@ func New(url string, opts ...Option) (*Postgres, error) {
 		opt(pg)
 	}
 
+	pgxUrl := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		cfg.PostgresUser,
+		cfg.PostgresPassword,
+		cfg.PostgresHost,
+		cfg.PostgresPort,
+		cfg.PostgresDatabase,
+	)
+
 	pg.Builder = squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar)
 	var err error
 	for pg.connAttempts > 0 {
-		pg.Db, err = sqlx.Connect("postgres", url)
+		pg.Db, err = sqlx.Connect("postgres", pgxUrl)
 		if err == nil {
 			break
 		}
