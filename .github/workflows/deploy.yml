@@ -15,9 +15,9 @@ env:
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
   POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
   POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-  POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
+  POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
   POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-  POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
+  POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
 
 jobs:
   build-and-deploy:
@@ -58,7 +58,7 @@ jobs:
 
       - name: Database Migration
         run: |
-          migrate -path migrations/ -database postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@${{ env.POSTGRES_HOST }}:5432/${{ env.POSTGRES_DATABASE }}?sslmode=disable up
+          migrate -path migrations/ -database postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@${{ env.POSTGRES_HOST }}:${{ env.POSTGRES_PORT }}/${{ env.POSTGRES_DATABASE }}?sslmode=disable up
       
       - name: Pull Docker image on the server
         run: |
