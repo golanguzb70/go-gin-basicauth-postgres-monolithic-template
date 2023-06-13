@@ -13,11 +13,11 @@ env:
   SERVER_PRIVATE_KEY: ${{ secrets.SERVER_PRIVATE_KEY }}
   IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
   CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
-  DB_HOST: ${{ secrets.DB_HOST }}
-  DB_PORT: ${{ secrets.DB_PORT }}
-  DB_USERNAME: ${{ secrets.DB_USERNAME }}
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_NAME: ${{ secrets.DB_NAME }}
+  POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+  POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+  POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
+  POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+  POSTGRES_NAME: ${{ secrets.POSTGRES_NAME }}
 
 jobs:
   build-and-deploy:
@@ -53,16 +53,12 @@ jobs:
         with:
           ssh-private-key: ${{ env.SERVER_PRIVATE_KEY }}
 
-      - name: Run database migration
+      - name: Install golang-migrate
+        run: go get -u github.com/golang-migrate/migrate/v4/cmd/migrate
+
+      - name: Database Migration
         run: |
-          ssh ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }} \
-            cd /path/to/repository && \
-            ./migrations/migrate.sh \
-              --host=${{ env.DB_HOST }} \
-              --port=${{ env.DB_PORT }} \
-              --username=${{ env.DB_USERNAME }} \
-              --password=${{ env.DB_PASSWORD }} \
-              --database=${{ env.DB_NAME }}
+          migrate -path migrations/ -database postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@${{ env.POSTGRES_HOST }}:5432/${{ env.POSTGRES_DATABASE }}?sslmode=disable up
       
       - name: Pull Docker image on the server
         run: |
