@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - deploybranch
+      - main
 
 env:
   DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -54,12 +54,15 @@ jobs:
           ssh-private-key: ${{ env.SERVER_PRIVATE_KEY }}
 
       - name: Install golang-migrate
-        run: go get -u github.com/golang-migrate/migrate/v4/cmd/migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.12.2/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate.linux-amd64 /usr/bin/migrate
+          which migrate
 
       - name: Database Migration
         run: |
           migrate -path migrations/ -database postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@${{ env.POSTGRES_HOST }}:${{ env.POSTGRES_PORT }}/${{ env.POSTGRES_DATABASE }}?sslmode=disable up
-      
+
       - name: Pull Docker image on the server
         run: |
           ssh ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }} \
@@ -68,6 +71,4 @@ jobs:
       - name: Run Docker container on the server
         run: |
           ssh ${{ env.SERVER_USERNAME }}@${{ env.SERVER_HOST }} \
-            docker  stop ${{ env.CONTAINER_NAME }} | true \
-            docker rm ${{ env.CONTAINER_NAME }} || true \
-            docker run -d --name ${{ env.CONTAINER_NAME }} -p 8000:8000 ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            docker run -d --rm --name ${{ env.CONTAINER_NAME }} -p 8001:8000 ${{ env.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
