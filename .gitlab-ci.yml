@@ -1,0 +1,74 @@
+before_script:
+  ## docker login
+  - docker login $REGISTRY --username $REGISTRY_USER --password $CI_REGISTRY_PASSWORD
+  ## install dependencies
+  - apk update && apk --no-cache --update add build-base openssh curl
+
+stages:
+  - build
+  - migrate
+  - deploy
+
+build-image-prod:
+  stage: build
+  script:
+    - docker build --rm -t ${REGISTRY_USER}/${PROJECT_NAME}/${PROD_IMAGE}:${PROD_TAG} .
+    - docker push ${REGISTRY_USER}/${PROJECT_NAME}/${PROD_IMAGE}:${PROD_TAG}
+  only:
+    - prod-branch
+
+build-image-staging:
+  stage: build
+  script:
+    - docker build --rm -t ${REGISTRY_USER}/${PROJECT_NAME}/${STAGING_IMAGE}:${STAGING_TAG} .
+    - docker push ${REGISTRY_USER}/${PROJECT_NAME}/${STAGING_IMAGE}:${STAGING_TAG}
+  only:
+    - staging-branch
+
+migrate_prod:
+  stage: migrate
+  before_script:
+    - apk add wget && wget https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz
+    - tar -xvf migrate.linux-amd64.tar.gz && mv migrate.linux-amd64 migrate && chmod +x migrate
+  script:
+    - ./migrate -path=$PWD/migrations -database "postgres://$PRODPOSTGRES_USER}:${PROD_POSTGRES_PASSWORD}@${PROD_POSTGRES_HOST}:${PROD_POSTGRES_PORT}/${PROD_POSTGRES_DATABASE}?sslmode=disable" up
+  only:
+    - prod-branch
+
+migrate_staging:
+  stage: migrate
+  before_script:
+    - apk add wget && wget https://github.com/golang-migrate/migrate/releases/download/v4.14.1/migrate.linux-amd64.tar.gz
+    - tar -xvf migrate.linux-amd64.tar.gz && mv migrate.linux-amd64 migrate && chmod +x migrate
+  script:
+    - ./migrate -path=$PWD/migrations -database "postgres://${STAGING_POSTGRES_USER}:${STAGING_POSTGRES_PASSWORD}@${STAGING_POSTGRES_HOST}:${STAGING_POSTGRES_PORT}/${STAGING_POSTGRES_DATABASE}?sslmode=disable" up
+  only:
+    - staging-branch
+
+deploy-prod:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$GITLAB_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no $PROD_SERVER_USER@$PROD_SERVER_HOST '
+      docker pull ${REGISTRY_USER}/${PROJECT_NAME}/${PROD_IMAGE}:${PROD_TAG} &&  
+      docker run -d --rm --name $PROD_CONTAINER_NAME -p 8000:8000 ${REGISTRY_USER}/${PROJECT_NAME}/${PROD_IMAGE}:${PROD_TAG}'
+  only:
+    - prod-branch
+
+deploy-staging:
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$GITLAB_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+  script:
+    - ssh -o StrictHostKeyChecking=no $STAGING_SERVER_USER@$STAGING_SERVER_HOST '
+      docker pull ${REGISTRY_USER}/${PROJECT_NAME}/${STAGING_IMAGE}:${STAGING_TAG} &&  
+      docker run -d --rm --name $STAGING_CONTAINER_NAME -p 8000:8000 ${REGISTRY_USER}/${PROJECT_NAME}/${STAGING_IMAGE}:${STAGING_TAG}'
+  only:
+    - staging-branch
