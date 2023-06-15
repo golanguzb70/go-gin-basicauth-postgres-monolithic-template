@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <title>Golang developers community Uzbekistan</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        .box {
+            width: 600px;
+            margin: 0 auto;
+            border:1px solid #e0e0e0;
+            border-radius: 10px;
+        }
+        header {
+            text-align: center;
+            background:#252f3d;
+            padding:20px 0 20px 0;
+        }
+        header h1 {
+            color: #fff;
+            margin: 0;
+        }
+
+        .box1 {
+            padding: 25px 35px;
+        }
+        .box1 h1 {
+            font-size: 20px;
+            padding: 0;
+            margin-top: 0;
+            margin-left: 0;
+            margin-right: 0 ;
+        }
+        .box1 p {
+            margin: 0;
+            padding: 0;
+        }
+        .box2 {
+            text-align: center;
+            border-bottom:1px solid #e0e0e0;
+        }
+        .box2 h1 {
+            color:#000;
+            font-size:36px;
+            font-weight:bold;
+            margin: 0;
+        }
+        .box2 h4 {
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+        .box3 {
+            padding: 25px 35px;
+        }
+        .box__img{
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        </style>
+</head>
+<body>
+
+    <div class="box">
+        <header  style="background-color: #f7f7f7;">
+            <img src="https://res.cloudinary.com/teepublic/image/private/s--ER5JbAQt--/c_crop,x_10,y_10/c_fit,h_830/c_crop,g_north_west,h_1038,w_1038,x_-264,y_-104/l_upload:v1565806151:production:blanks:vdbwo35fw6qtflw9kezw/fl_layer_apply,g_north_west,x_-375,y_-215/b_rgb:ffffff/c_limit,f_jpg,h_630,q_90,w_630/v1560920784/production/designs/5102695_1.jpg" alt="Golang developers community" class="box__img">
+        </header>
+        <div class="box1">
+            <h1 style="font-size:20px; text-align: center;">Welcome to Golang developers community</h1>
+            <p>Thanks for joining Golang developers community. Contribute open source Golang projects <a href="https://github.com/golanguzb70">here</a></p>
+        </div>
+        <div class="box2">
+            <h4>Verification code</h4>
+            <h1 id="ttt">{{ .Code }}</h1>
+            <p>(This code is valid for 5 minutes)</p>
+        </div>
+        <div class="box3">
+            <p>Please don't reply this email as it sent by server.</p>
+        </div>
+    </div>
+</body>
+</html>

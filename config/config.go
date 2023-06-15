@@ -23,11 +23,15 @@ type Config struct {
 	BaseUrl                   string
 	AdminUsername             string
 	AdminPassword             string
+	SMTPEmail                 string
+	SMTPEmailPass             string
+	SMTPHost                  string
+	SMTPPort                  string
 }
 
 // Load loads environment vars and inflates Config
 func Load() Config {
-	dotenvFilePath := cast.ToString(getOrReturnDefault("DOT_ENV_PATH", "config/test.env"))
+	dotenvFilePath := cast.ToString(getOrReturnDefault("DOT_ENV_PATH", "config/.env"))
 	err := godotenv.Load(dotenvFilePath)
 
 	if err != nil {
@@ -51,6 +55,12 @@ func Load() Config {
 
 	c.AdminUsername = cast.ToString(getOrReturnDefault("ADMIN_USERNAME", "templatename"))
 	c.AdminPassword = cast.ToString(getOrReturnDefault("ADMIN_PASSWORD", "templatepass"))
+
+	// Email sending
+	c.SMTPEmail = cast.ToString(getOrReturnDefault("SMTP_EMAIL", "youremail@gmail.com"))
+	c.SMTPEmailPass = cast.ToString(getOrReturnDefault("SMTP_EMAIL_PASS", "YOUR_EMAIL_PASSWORD"))
+	c.SMTPHost = cast.ToString(getOrReturnDefault("SMTP_HOST", "smtp host"))
+	c.SMTPPort = cast.ToString(getOrReturnDefault("SMTP_PORT", "587"))
 	return c
 }
 
