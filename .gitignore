@@ -22,5 +22,3 @@ go.work
 
 # All .env files are ignored
 config/.env
-
-test.go
