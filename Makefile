@@ -23,4 +23,7 @@ compose_up: compose_down
 	docker compose up -d --build
 
 crud:
-	./scripts/crud.sh
+	bash ./scripts/crud.sh
+
+create-repo:
+	bash ./scripts/git-lab-hub-repo-creator.sh
