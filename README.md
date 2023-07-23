@@ -19,3 +19,15 @@ After program is started successfully, you can check if it is running using this
 ```
 http://localhost:8000/v1/swagger/index.html
 ```
+
+# Optional settings
+This settings helps you to create new projects faster and easier.
+
+### Setting environment variables for gitlab and github actions
+These environment variables can be saved different places according to your OS configurations. It can be stored in .zshrc, .bashrc, .profile files.
+```
+GITHUB_USERNAME="your_github_username"
+GITHUB_PERSONAL_ACCESS_TOKEN="your github personal access token."
+GITLAB_USERNAME="your_gitlab_username"
+GITLAB_PERSONAL_ACCESS_TOKEN="your gitlab personal access token."
+```
